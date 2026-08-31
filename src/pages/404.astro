@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { siteConfig } from '../data/site';
+---
+
+<BaseLayout title="404 · 找不到页面" description="页面不存在，返回首页继续。">
+  <section class="container" style="min-height:60vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding-top:80px;">
+    <div class="error-code">404</div>
+    <h1 style="font-size:clamp(24px,4vw,32px);margin:16px 0;">页面走丢了</h1>
+    <p class="card-desc" style="margin-bottom:32px;">你要找的页面不存在，可能链接变了或被移除了。</p>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
+      <a href="/" class="btn btn-primary">返回首页</a>
+      <a href="/blog" class="btn">看文章</a>
+      <a href="/works" class="btn">看产品</a>
+    </div>
+    <div style="margin-top:48px;color:var(--text-dim);font-family:'JetBrains Mono',monospace;font-size:12px;">
+      {siteConfig.name} · Build in Public
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .error-code {
+    font-size: clamp(80px, 18vw, 160px);
+    font-weight: 700;
+    line-height: 1;
+    background: var(--accent-grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.04em;
+  }
+</style>

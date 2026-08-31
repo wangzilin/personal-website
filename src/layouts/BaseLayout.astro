@@ -52,6 +52,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 
     <!-- sitemap -->
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="alternate" type="application/rss+xml" title={siteConfig.name} href="/rss.xml" />
 
     <!-- 字体 -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
