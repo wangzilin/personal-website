@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# 站点地图
+Sitemap: https://personal-site.pages.dev/sitemap-index.xml

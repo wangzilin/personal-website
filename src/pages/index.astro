@@ -1,0 +1,325 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { siteConfig } from '../data/site';
+import { getCollection } from 'astro:content';
+
+const works = (await getCollection('works'))
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 4);
+const recentNotes = (await getCollection('notes'))
+  .filter((n) => !n.data.draft)
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+  .slice(0, 3);
+
+const statusMap: Record<string, string> = {
+  online: '已上线',
+  developing: '开发中',
+  planning: '规划中',
+};
+---
+
+<BaseLayout>
+  <!-- ============ HERO ============ -->
+  <section class="hero container">
+    <span class="badge">{siteConfig.hero.badge} · {siteConfig.year}</span>
+    <h1>{siteConfig.hero.title}</h1>
+    <p class="hero-sub">{siteConfig.hero.subtitle}</p>
+    <div class="hero-keywords">
+      {siteConfig.hero.keywords.map((k) => <span class="keyword">{k}</span>)}
+    </div>
+  </section>
+
+  <!-- ============ HOW I CAN HELP ============ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-tag">HOW I CAN HELP</span>
+      </div>
+      <h2 class="section-title" style="margin-bottom:48px;">有具体问题，我帮你推进到可用结果。</h2>
+      <div class="grid grid-3">
+        {siteConfig.services.map((s) => (
+          <article class="card service-card">
+            <div class="card-no mono">{s.no} / {s.tag}</div>
+            <h3 class="card-title">{s.title}</h3>
+            <p class="card-you"><strong>你可能正在：</strong>{s.youAre}</p>
+            <p class="card-desc">我可以帮你<br/>{s.iCan}</p>
+            <div class="card-proof mono">交付方向 · {s.proof}</div>
+            <a href="/contact" class="card-link">{s.cto} →</a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 数据统计 ============ -->
+  <section class="section">
+    <div class="container">
+      <div class="stats">
+        {siteConfig.stats.map((st) => (
+          <div class="stat">
+            <div class="stat-value">{st.value}</div>
+            <div class="stat-label">{st.label}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ START HERE ============ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-tag">START HERE</span>
+      </div>
+      <h2 class="section-title">你来这里，想找什么？</h2>
+      <div class="grid grid-3" style="margin-top:40px;">
+        <a href="/works" class="card nav-card">
+          <div class="card-tag">PRODUCT</div>
+          <div class="card-title" style="font-size:18px;">看我在做什么产品</div>
+          <div class="card-desc">公开推进状态，不包装成已成熟的项目。</div>
+        </a>
+        <a href="/blog" class="card nav-card">
+          <div class="card-tag">CONTENT</div>
+          <div class="card-title" style="font-size:18px;">读实践文章</div>
+          <div class="card-desc">只收录已经存在的文章，真实过程写下来。</div>
+        </a>
+        <a href="/contact" class="card nav-card">
+          <div class="card-tag">WORK</div>
+          <div class="card-title" style="font-size:18px;">聊具体合作</div>
+          <div class="card-desc">有预算和目标，再一起聊具体合作。</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WHAT I DO ============ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-tag">WHAT I DO</span>
+      </div>
+      <h2 class="section-title" style="margin-bottom:48px;">现在，主要做三件事。</h2>
+      <p class="section-desc" style="margin-bottom:48px;">产品是实践，内容是连接，服务是把已经跑通的方法交付给具体的人。</p>
+      <div class="grid grid-3">
+        {siteConfig.whatIDo.map((d) => (
+          <article class="card">
+            <div class="card-no mono">{d.no} / {d.tag}</div>
+            <h3 class="card-title">{d.title}</h3>
+            <p class="card-desc">{d.desc}</p>
+            <a href={d.no === '01' ? '/works' : d.no === '03' ? '/blog' : '/contact'} class="card-link">{d.cta} →</a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CURRENT PRODUCTS ============ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-tag">CURRENT PRODUCTS</span>
+      </div>
+      <h2 class="section-title" style="margin-bottom:16px;">正在推进的产品。</h2>
+      <p class="section-desc" style="margin-bottom:48px;">不包装成已经成熟的商业项目，公开展示真实状态和下一步。</p>
+      <div class="grid grid-4 product-grid">
+        {works.map((w) => (
+          <a href={`/works/${w.id}`} class="card product-card">
+            <div class="product-logo">
+              <span class="product-logo-mark">◆</span>
+            </div>
+            <h3 class="product-name">{w.data.name}</h3>
+            <p class="product-tagline">{w.data.tagline}</p>
+            <p class="card-desc" style="margin-top:10px;">{w.data.description}</p>
+            <div class="product-status mono">
+              <span class={`status-dot status-${w.data.status}`}></span>
+              {statusMap[w.data.status]}
+            </div>
+          </a>
+        ))}
+      </div>
+      {works.length === 0 && (
+        <div class="empty-hint">
+          <p class="mono">暂无产品</p>
+          <p class="card-desc">在 src/content/works/ 下放 Markdown 文件即可自动收录到产品矩阵。</p>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- ============ RECENTLY SHIPPING ============ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-tag">RECENTLY SHIPPING</span>
+      </div>
+      <h2 class="section-title" style="margin-bottom:16px;">最近在推进什么。</h2>
+      <p class="section-desc" style="margin-bottom:40px;">不写空泛的"持续努力"，只保留目前已经发生或正在进行的状态。</p>
+      <div class="timeline">
+        {recentNotes.length === 0 ? (
+          <div class="empty-hint">
+            <p class="card-desc">在 src/content/notes/ 下放 Markdown 文件即可显示最近进展。</p>
+          </div>
+        ) : (
+          recentNotes.map((n) => (
+            <article class="timeline-item">
+              <div class="timeline-date mono">{n.data.pubDate.toLocaleDateString('zh-CN')}</div>
+              <a href={`/blog/${n.id}`} class="timeline-title">{n.data.title}</a>
+              <p class="card-desc">{n.data.description}</p>
+            </article>
+          ))
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FREE COMMUNITY / NOTES / WORK ============ -->
+  <section class="section">
+    <div class="container">
+      <div class="grid grid-3">
+        <div class="card community-card">
+          <div class="card-tag">FREE COMMUNITY</div>
+          <h3 class="card-title">{siteConfig.community.freeTitle}</h3>
+          <p class="card-desc">{siteConfig.community.freeDesc}</p>
+        </div>
+        <div class="card">
+          <div class="card-tag">PUBLIC NOTES</div>
+          <h3 class="card-title">{siteConfig.community.notesTitle}</h3>
+          <p class="card-desc">{siteConfig.community.notesDesc}</p>
+          <a href="/blog" class="card-link">阅读文章 →</a>
+        </div>
+        <div class="card work-card">
+          <div class="card-tag">WORK WITH ME</div>
+          <h3 class="card-title">{siteConfig.community.workTitle}</h3>
+          <p class="card-desc">{siteConfig.community.workDesc}</p>
+          <a href="/contact" class="btn btn-primary" style="margin-top:20px;">聊合作</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .service-card .card-you {
+    color: var(--text-muted);
+    font-size: 13px;
+    margin: 12px 0;
+    padding: 10px;
+    background: var(--bg-elevated);
+    border-radius: 8px;
+    border-left: 2px solid var(--accent);
+  }
+  .card-proof {
+    color: var(--text-dim);
+    font-size: 11px;
+    margin: 16px 0 8px;
+    letter-spacing: 0.1em;
+  }
+  .nav-card {
+    display: block;
+  }
+  .product-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .product-card {
+    display: block;
+  }
+  .product-logo {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+  .product-logo-mark {
+    color: var(--accent);
+    font-size: 20px;
+    text-shadow: var(--glow);
+  }
+  .product-name {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .product-tagline {
+    color: var(--accent);
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .product-status {
+    margin-top: 16px;
+    font-size: 11px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    letter-spacing: 0.1em;
+  }
+  .status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .status-online {
+    background: #00ff9d;
+    box-shadow: 0 0 6px #00ff9d;
+  }
+  .status-developing {
+    background: #ffaa00;
+    box-shadow: 0 0 6px #ffaa00;
+  }
+  .status-planning {
+    background: var(--text-dim);
+  }
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 24px;
+    padding: 20px 0;
+    border-top: 1px solid var(--border);
+    align-items: start;
+  }
+  .timeline-date {
+    color: var(--text-dim);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+  }
+  .timeline-title {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    display: block;
+  }
+  .empty-hint {
+    padding: 32px;
+    text-align: center;
+    border: 1px dashed var(--border);
+    border-radius: 12px;
+  }
+  .empty-hint .mono {
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .work-card {
+    background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-elevated) 100%);
+    border-color: var(--border-strong);
+  }
+  @media (max-width: 900px) {
+    .product-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .timeline-item {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+  }
+</style>

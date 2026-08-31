@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { siteConfig } from '../data/site';
+---
+
+<BaseLayout title="联系 · 王同学" description="和王同学聊具体合作。">
+  <section class="hero container" style="padding-top:80px;padding-bottom:32px;">
+    <span class="badge">WORK WITH ME</span>
+    <h1 style="font-size:clamp(32px,5vw,48px);margin-top:24px;">聊合作</h1>
+    <p class="hero-sub">有具体问题、预算和目标，再一起来聊具体合作。</p>
+  </section>
+
+  <section class="section" style="padding-top:32px;">
+    <div class="container">
+      <div class="grid grid-3">
+        {siteConfig.services.map((s) => (
+          <div class="card">
+            <div class="card-no mono">{s.no} / {s.tag}</div>
+            <h3 class="card-title" style="font-size:18px;">{s.title}</h3>
+            <p class="card-desc">{s.iCan}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="contact-cta" style="margin-top:48px;">
+        <h2 style="font-size:28px;margin-bottom:16px;">目前开放的合作</h2>
+        <p class="card-desc" style="font-size:16px;line-height:1.8;">
+          AI 工具推广 · Skill 定制 · AI 知识库搭建 · 内容工作流搭建
+          <br />
+          也接受合适的软件、课程、社群和内容产品推广。
+        </p>
+        <div class="contact-links" style="margin-top:32px;">
+          {siteConfig.social.map((s) => (
+            <a href={s.url} target="_blank" rel="noopener" class="btn">{s.label} →</a>
+          ))}
+        </div>
+        <p class="card-desc" style="margin-top:24px;">
+          <span class="mono" style="color:var(--text-dim);">提示：</span>
+          请先在对应平台私信说明你的目标、预算和时间，我会尽快回复。
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contact-cta {
+    padding: 40px;
+    background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-elevated) 100%);
+    border: 1px solid var(--border-strong);
+    border-radius: 16px;
+  }
+  .contact-links { display: flex; gap: 12px; flex-wrap: wrap; }
+</style>

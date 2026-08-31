@@ -1,0 +1,431 @@
+/* ====================================================================
+   全局样式 + 三种科技感皮肤
+   皮肤切换通过 <html data-theme="..."> 属性实现
+   ==================================================================== */
+
+/* ---------- 皮肤 1：Cyber Neon 赛博霓虹 ---------- */
+:root,
+[data-theme='cyber'] {
+  --bg: #050608;
+  --bg-elevated: #0c0e14;
+  --bg-card: #0f1218;
+  --bg-hover: #14181f;
+  --border: rgba(0, 255, 157, 0.16);
+  --border-strong: rgba(0, 255, 157, 0.35);
+  --text: #e8f4ee;
+  --text-muted: #7a8a82;
+  --text-dim: #4a5651;
+  --accent: #00ff9d;
+  --accent-2: #ff0080;
+  --accent-grad: linear-gradient(135deg, #00ff9d 0%, #00d4ff 100%);
+  --glow: 0 0 24px rgba(0, 255, 157, 0.28);
+  --glow-2: 0 0 24px rgba(255, 0, 128, 0.28);
+  --grid-line: rgba(0, 255, 157, 0.04);
+  --theme-name: 'Cyber Neon';
+}
+
+/* ---------- 皮肤 2：Carbon Tech 碳黑电蓝 ---------- */
+[data-theme='carbon'] {
+  --bg: #0a0b0d;
+  --bg-elevated: #14161a;
+  --bg-card: #1a1d22;
+  --bg-hover: #21252b;
+  --border: rgba(0, 168, 255, 0.16);
+  --border-strong: rgba(0, 168, 255, 0.38);
+  --text: #e8eef4;
+  --text-muted: #7a8290;
+  --text-dim: #4a5260;
+  --accent: #00a8ff;
+  --accent-2: #5b9eff;
+  --accent-grad: linear-gradient(135deg, #00a8ff 0%, #5b9eff 100%);
+  --glow: 0 0 24px rgba(0, 168, 255, 0.28);
+  --glow-2: 0 0 24px rgba(91, 158, 255, 0.28);
+  --grid-line: rgba(0, 168, 255, 0.04);
+  --theme-name: 'Carbon Tech';
+}
+
+/* ---------- 皮肤 3：Aurora Matrix 极光矩阵 ---------- */
+[data-theme='aurora'] {
+  --bg: #0a0815;
+  --bg-elevated: #12101f;
+  --bg-card: #1a1530;
+  --bg-hover: #221a3d;
+  --border: rgba(0, 212, 255, 0.18);
+  --border-strong: rgba(0, 212, 255, 0.4);
+  --text: #ece4f8;
+  --text-muted: #8a7eaa;
+  --text-dim: #4a4060;
+  --accent: #00d4ff;
+  --accent-2: #c800ff;
+  --accent-grad: linear-gradient(135deg, #00d4ff 0%, #c800ff 100%);
+  --glow: 0 0 24px rgba(0, 212, 255, 0.28);
+  --glow-2: 0 0 24px rgba(200, 0, 255, 0.28);
+  --grid-line: rgba(0, 212, 255, 0.05);
+  --theme-name: 'Aurora Matrix';
+}
+
+/* ---------- Reset ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
+    'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  font-size: 16px;
+  overflow-x: hidden;
+  transition: background 0.4s ease, color 0.4s ease;
+  /* 科技感网格背景 */
+  background-image: linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* 顶部渐变光晕 */
+body::before {
+  content: '';
+  position: fixed;
+  top: -20vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80vw;
+  height: 60vh;
+  background: radial-gradient(ellipse at center, var(--accent) 0%, transparent 60%);
+  opacity: 0.08;
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 0.4s ease;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--accent);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+/* ---------- 排版 ---------- */
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.mono {
+  font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, monospace;
+}
+
+/* ---------- 布局容器 ---------- */
+.container {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.section {
+  padding: 96px 0;
+  border-top: 1px solid var(--border);
+}
+
+.section-head {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 48px;
+  flex-wrap: wrap;
+}
+
+.section-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  text-transform: uppercase;
+}
+
+.section-title {
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 700;
+}
+
+.section-desc {
+  color: var(--text-muted);
+  font-size: 15px;
+  max-width: 52ch;
+}
+
+/* ---------- 按钮 / 徽章 ---------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  text-transform: uppercase;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  background: var(--bg-elevated);
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: var(--glow);
+  transform: translateY(-1px);
+}
+
+.btn-primary {
+  background: var(--accent-grad);
+  color: #000;
+  border: none;
+  font-weight: 600;
+}
+
+.btn-primary:hover {
+  color: #000;
+  box-shadow: var(--glow);
+  transform: translateY(-1px);
+}
+
+/* ---------- 网格 / 卡片 ---------- */
+.grid {
+  display: grid;
+  gap: 24px;
+}
+
+.grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.grid-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 28px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover {
+  border-color: var(--border-strong);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--accent-grad);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card:hover::after {
+  opacity: 1;
+}
+
+.card-no {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--text-dim);
+  letter-spacing: 0.1em;
+  margin-bottom: 16px;
+}
+
+.card-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.card-title {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.card-desc {
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.card-link {
+  margin-top: 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--accent);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ---------- 数据统计 ---------- */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.stat-value {
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: 700;
+  background: var(--accent-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1;
+}
+
+.stat-label {
+  color: var(--text-muted);
+  font-size: 13px;
+  margin-top: 8px;
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  padding: 120px 0 80px;
+  position: relative;
+}
+
+.hero h1 {
+  font-size: clamp(36px, 6vw, 64px);
+  margin: 24px 0;
+  max-width: 18ch;
+}
+
+.hero-sub {
+  font-size: 18px;
+  color: var(--text-muted);
+  max-width: 56ch;
+  line-height: 1.7;
+}
+
+.hero-keywords {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 32px;
+}
+
+.keyword {
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 13px;
+  color: var(--text-muted);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ---------- 响应式 ---------- */
+@media (max-width: 768px) {
+  .grid-3,
+  .grid-4,
+  .stats {
+    grid-template-columns: 1fr;
+  }
+  .section {
+    padding: 64px 0;
+  }
+  .hero {
+    padding: 80px 0 48px;
+  }
+}
+
+/* ---------- 滚动条 ---------- */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--bg-hover);
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}

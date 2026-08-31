@@ -1,0 +1,70 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const works = await getCollection('works');
+  return works.map((w) => ({
+    params: { id: w.id },
+    props: { work: w },
+  }));
+}
+
+const { work } = Astro.props;
+const { Content } = await render(work);
+const statusMap: Record<string, string> = {
+  online: '已上线',
+  developing: '开发中',
+  planning: '规划中',
+};
+---
+
+<BaseLayout title={`${work.data.name} · 王同学`} description={work.data.description}>
+  <article class="container" style="padding-top:80px;max-width:760px;">
+    <a href="/works" class="back-link mono">← 返回产品矩阵</a>
+    <div class="product-logo" style="margin-top:24px;">
+      <span class="product-logo-mark">◆</span>
+    </div>
+    <h1 style="font-size:clamp(28px,5vw,40px);margin:16px 0 8px;">{work.data.name}</h1>
+    <p class="product-tagline" style="color:var(--accent);font-family:'JetBrains Mono',monospace;">{work.data.tagline}</p>
+    <div class="meta-row">
+      <span class="badge" style="border-color:var(--border);color:var(--text-muted);">
+        <span class={`status-dot status-${work.data.status}`}></span>
+        {statusMap[work.data.status]}
+      </span>
+      {work.data.tags.map((t) => <span class="keyword">{t}</span>)}
+    </div>
+    {work.data.links.length > 0 && (
+      <div class="links-row">
+        {work.data.links.map((l) => (
+          <a href={l.url} target="_blank" rel="noopener" class="btn">{l.label} →</a>
+        ))}
+      </div>
+    )}
+    <div class="prose" style="margin-top:40px;">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .back-link { color: var(--text-dim); font-size: 12px; letter-spacing: 0.1em; }
+  .back-link:hover { color: var(--accent); }
+  .product-logo {
+    width: 56px; height: 56px; border-radius: 12px;
+    background: var(--bg-elevated); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .product-logo-mark { color: var(--accent); font-size: 24px; text-shadow: var(--glow); }
+  .meta-row { display: flex; gap: 10px; align-items: center; margin-top: 20px; flex-wrap: wrap; }
+  .status-dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+  .status-online { background: #00ff9d; box-shadow: 0 0 6px #00ff9d; }
+  .status-developing { background: #ffaa00; box-shadow: 0 0 6px #ffaa00; }
+  .status-planning { background: var(--text-dim); }
+  .links-row { margin-top: 24px; display: flex; gap: 12px; flex-wrap: wrap; }
+  .prose :global(h2) { font-size: 24px; margin: 32px 0 16px; }
+  .prose :global(p) { color: var(--text-muted); margin: 16px 0; line-height: 1.8; }
+  .prose :global(ul) { color: var(--text-muted); margin: 16px 0 16px 20px; }
+  .prose :global(li) { margin: 6px 0; }
+  .prose :global(code) { background: var(--bg-elevated); padding: 2px 6px; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+</style>

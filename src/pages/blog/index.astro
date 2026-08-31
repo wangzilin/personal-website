@@ -1,0 +1,60 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog'))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+---
+
+<BaseLayout title="文章 · 王同学" description="王同学的实践文章，只收录已经存在的内容。">
+  <section class="hero container" style="padding-top:80px;padding-bottom:32px;">
+    <span class="badge">PUBLIC NOTES</span>
+    <h1 style="font-size:clamp(32px,5vw,48px);margin-top:24px;">文章</h1>
+    <p class="hero-sub">把真实过程写下来。网站只收录已经存在的文章。</p>
+  </section>
+
+  <section class="section" style="padding-top:32px;">
+    <div class="container">
+      <div class="post-list">
+        {posts.map((p) => (
+          <a href={`/blog/${p.id}`} class="post-item">
+            <div class="post-date mono">{p.data.pubDate.toLocaleDateString('zh-CN')}</div>
+            <div class="post-body">
+              <h3 class="post-title">{p.data.title}</h3>
+              {p.data.description && <p class="card-desc">{p.data.description}</p>}
+              <div class="post-tags">
+                {p.data.tags.map((t) => <span class="keyword">{t}</span>)}
+              </div>
+            </div>
+          </a>
+        ))}
+        {posts.length === 0 && (
+          <div class="empty-hint">
+            <p class="mono">暂无文章</p>
+            <p class="card-desc">在 src/content/blog/ 下新增 Markdown 文件即可自动收录。</p>
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .post-list { display: flex; flex-direction: column; }
+  .post-item {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 24px;
+    padding: 24px 0;
+    border-top: 1px solid var(--border);
+    align-items: start;
+  }
+  .post-item:hover { background: var(--bg-elevated); }
+  .post-date { color: var(--text-dim); font-size: 12px; letter-spacing: 0.1em; padding-top: 2px; }
+  .post-title { font-size: 19px; font-weight: 600; margin-bottom: 8px; }
+  .post-tags { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; }
+  @media (max-width: 640px) {
+    .post-item { grid-template-columns: 1fr; gap: 8px; }
+  }
+</style>

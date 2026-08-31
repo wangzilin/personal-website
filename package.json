@@ -1,0 +1,19 @@
+{
+  "name": "personal-site",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "个人网站 - build in public 风格，三种科技感皮肤可切换",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^6.0.0",
+    "@astrojs/sitemap": "^3.3.0",
+    "@astrojs/mdx": "^5.0.0",
+    "@astrojs/rss": "^4.0.3"
+  }
+}

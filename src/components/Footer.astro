@@ -1,0 +1,96 @@
+---
+import { siteConfig } from '../data/site';
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">
+          <span class="logo-mark">◆</span>
+          <span>{siteConfig.name}</span>
+        </div>
+        <p class="footer-tagline">{siteConfig.role}</p>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-title mono">NAV</h4>
+        <a href="/">首页</a>
+        <a href="/works">产品</a>
+        <a href="/blog">文章</a>
+        <a href="/contact">联系</a>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-title mono">CONNECT</h4>
+        {siteConfig.social.map((s) => <a href={s.url} target="_blank" rel="noopener">{s.label}</a>)}
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© {year} {siteConfig.name} · Build in Public</span>
+      <span class="mono footer-built">Powered by Astro · {siteConfig.hero.badge}</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--border);
+    padding: 64px 0 32px;
+    margin-top: 64px;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 48px;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .logo-mark {
+    color: var(--accent);
+  }
+  .footer-tagline {
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+  .footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .footer-title {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+  }
+  .footer-col a {
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+  .footer-col a:hover {
+    color: var(--accent);
+  }
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text-dim);
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  @media (max-width: 640px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+  }
+</style>

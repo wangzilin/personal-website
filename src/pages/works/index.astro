@@ -1,0 +1,70 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const works = (await getCollection('works')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+const statusMap: Record<string, string> = {
+  online: '已上线',
+  developing: '开发中',
+  planning: '规划中',
+};
+---
+
+<BaseLayout title="产品矩阵 · 王同学" description="王同学正在推进的产品与项目，公开展示真实状态。">
+  <section class="hero container" style="padding-top:80px;padding-bottom:32px;">
+    <span class="badge">CURRENT PRODUCTS</span>
+    <h1 style="font-size:clamp(32px,5vw,48px);margin-top:24px;">产品矩阵</h1>
+    <p class="hero-sub">不包装成已经成熟的商业项目，公开展示真实状态和下一步。</p>
+  </section>
+
+  <section class="section" style="padding-top:32px;">
+    <div class="container">
+      <div class="grid grid-3">
+        {works.map((w) => (
+          <a href={`/works/${w.id}`} class="card product-card">
+            <div class="product-logo">
+              <span class="product-logo-mark">◆</span>
+            </div>
+            <h3 class="product-name">{w.data.name}</h3>
+            <p class="product-tagline">{w.data.tagline}</p>
+            <p class="card-desc" style="margin-top:10px;">{w.data.description}</p>
+            <div class="product-meta">
+              <span class="product-status mono">
+                <span class={`status-dot status-${w.data.status}`}></span>
+                {statusMap[w.data.status]}
+              </span>
+              {w.data.tags.map((t) => <span class="keyword">{t}</span>)}
+            </div>
+          </a>
+        ))}
+        {works.length === 0 && (
+          <div class="empty-hint" style="grid-column:1/-1;">
+            <p class="mono">暂无产品</p>
+            <p class="card-desc">在 src/content/works/ 下新增 Markdown 文件即可自动收录。</p>
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .product-card { display:block; }
+  .product-logo {
+    width: 44px; height: 44px; border-radius: 10px;
+    background: var(--bg-elevated); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 16px;
+  }
+  .product-logo-mark { color: var(--accent); font-size: 20px; text-shadow: var(--glow); }
+  .product-name { font-size: 19px; font-weight: 600; margin-bottom: 4px; }
+  .product-tagline { color: var(--accent); font-size: 12px; font-family: 'JetBrains Mono', monospace; }
+  .product-meta { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .product-status { font-size: 11px; color: var(--text-muted); display: flex; align-items: center; gap: 6px; }
+  .status-dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+  .status-online { background: #00ff9d; box-shadow: 0 0 6px #00ff9d; }
+  .status-developing { background: #ffaa00; box-shadow: 0 0 6px #ffaa00; }
+  .status-planning { background: var(--text-dim); }
+</style>

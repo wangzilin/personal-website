@@ -1,0 +1,97 @@
+---
+// 三皮肤切换器：cyber / carbon / aurora
+// 选择会写入 localStorage，刷新后保留
+const themes = [
+  { id: 'cyber', name: '赛博霓虹', color: '#00ff9d' },
+  { id: 'carbon', name: '碳黑电蓝', color: '#00a8ff' },
+  { id: 'aurora', name: '极光矩阵', color: '#00d4ff' },
+];
+---
+
+<div class="theme-switcher" role="group" aria-label="切换网站皮肤">
+  <span class="theme-switcher-label mono">SKIN</span>
+  <div class="theme-options">
+    {
+      themes.map((t) => (
+        <button
+          class="theme-dot"
+          data-theme-id={t.id}
+          title={t.name}
+          aria-label={`切换到 ${t.name} 皮肤`}
+          style={`--dot-color: ${t.color}`}
+        >
+          <span class="theme-dot-inner" style={`background: ${t.color}`} />
+        </button>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .theme-switcher {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .theme-switcher-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--text-dim);
+  }
+  .theme-options {
+    display: flex;
+    gap: 8px;
+  }
+  .theme-dot {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: transparent;
+    cursor: pointer;
+    padding: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+  }
+  .theme-dot:hover {
+    border-color: var(--dot-color);
+    box-shadow: 0 0 10px var(--dot-color);
+  }
+  .theme-dot-inner {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    transition: transform 0.2s ease;
+  }
+  .theme-dot.active {
+    border-color: var(--dot-color);
+    box-shadow: 0 0 12px var(--dot-color);
+  }
+  .theme-dot.active .theme-dot-inner {
+    transform: scale(0.6);
+  }
+</style>
+
+<script>
+  const buttons = document.querySelectorAll('.theme-dot');
+  function setActive(id: string) {
+    document.documentElement.setAttribute('data-theme', id);
+    try {
+      localStorage.setItem('theme', id);
+    } catch (e) {}
+    buttons.forEach((b) => {
+      b.classList.toggle('active', b.getAttribute('data-theme-id') === id);
+    });
+  }
+  buttons.forEach((b) => {
+    b.addEventListener('click', () => {
+      setActive(b.getAttribute('data-theme-id') || 'cyber');
+    });
+  });
+  // 初始化高亮当前皮肤
+  const current =
+    document.documentElement.getAttribute('data-theme') || 'cyber';
+  setActive(current);
+</script>

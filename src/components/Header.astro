@@ -1,0 +1,98 @@
+---
+import { siteConfig } from '../data/site';
+import ThemeSwitcher from './ThemeSwitcher.astro';
+
+const nav = [
+  { label: '首页', href: '/' },
+  { label: '产品', href: '/works' },
+  { label: '文章', href: '/blog' },
+  { label: '联系', href: '/contact' },
+];
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="/" class="logo">
+      <span class="logo-mark">◆</span>
+      <span class="logo-text">{siteConfig.name}</span>
+      <span class="logo-suffix mono">.dev</span>
+    </a>
+    <nav class="nav">
+      {nav.map((n) => <a href={n.href} class="nav-link">{n.label}</a>)}
+    </nav>
+    <ThemeSwitcher />
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(5, 6, 8, 0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    gap: 24px;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 16px;
+  }
+  .logo-mark {
+    color: var(--accent);
+    text-shadow: var(--glow);
+  }
+  .logo-suffix {
+    color: var(--text-dim);
+    font-size: 13px;
+  }
+  .nav {
+    display: flex;
+    gap: 28px;
+    margin-left: auto;
+    margin-right: 8px;
+  }
+  .nav-link {
+    font-size: 14px;
+    color: var(--text-muted);
+    position: relative;
+    padding: 4px 0;
+  }
+  .nav-link:hover {
+    color: var(--text);
+  }
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--accent);
+    transition: width 0.2s ease;
+  }
+  .nav-link:hover::after {
+    width: 100%;
+  }
+  @media (max-width: 640px) {
+    .nav {
+      gap: 16px;
+    }
+    .nav-link {
+      font-size: 13px;
+    }
+    .logo-suffix {
+      display: none;
+    }
+  }
+</style>
