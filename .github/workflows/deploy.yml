@@ -23,4 +23,3 @@ jobs:
           accountId: c4793733941583231a112542d33910ab
           projectName: personal-site
           directory: dist
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
