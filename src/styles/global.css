@@ -1,69 +1,73 @@
 /* ====================================================================
    全局样式 + 三种科技感皮肤
    皮肤切换通过 <html data-theme="..."> 属性实现
+   三个皮肤差异极大：暗黑霓虹 / 亮白科技 / 深紫极光
    ==================================================================== */
 
-/* ---------- 皮肤 1：Cyber Neon 赛博霓虹（深黑 + 霓虹绿） ---------- */
+/* ---------- 皮肤 1：Cyber Neon 赛博霓虹（纯黑底 + 霓虹绿） ---------- */
 :root,
 [data-theme='cyber'] {
-  --bg: #030506;
-  --bg-elevated: #0a0f0c;
-  --bg-card: #0d1410;
-  --bg-hover: #121a15;
-  --border: rgba(0, 255, 157, 0.22);
-  --border-strong: rgba(0, 255, 157, 0.45);
-  --text: #e8f4ee;
-  --text-muted: #7a8a82;
-  --text-dim: #4a5651;
-  --accent: #00ff9d;
-  --accent-2: #ff0080;
-  --accent-grad: linear-gradient(135deg, #00ff9d 0%, #00d4ff 100%);
-  --glow: 0 0 28px rgba(0, 255, 157, 0.35);
-  --glow-2: 0 0 28px rgba(255, 0, 128, 0.35);
-  --grid-line: rgba(0, 255, 157, 0.06);
-  --hero-glow: radial-gradient(ellipse at center, rgba(0, 255, 157, 0.12) 0%, transparent 60%);
+  --bg: #000000;
+  --bg-elevated: #080a08;
+  --bg-card: #0a0e0c;
+  --bg-hover: #101510;
+  --border: rgba(0, 255, 136, 0.3);
+  --border-strong: rgba(0, 255, 136, 0.6);
+  --text: #e0ffe8;
+  --text-muted: #6a7a72;
+  --text-dim: #3a4640;
+  --accent: #00ff88;
+  --accent-2: #00ffcc;
+  --accent-grad: linear-gradient(135deg, #00ff88 0%, #00ffcc 100%);
+  --glow: 0 0 30px rgba(0, 255, 136, 0.4);
+  --glow-2: 0 0 30px rgba(0, 255, 204, 0.4);
+  --grid-line: rgba(0, 255, 136, 0.08);
+  --hero-glow: radial-gradient(ellipse at center, rgba(0, 255, 136, 0.15) 0%, transparent 60%);
+  --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.8);
   --theme-name: 'Cyber Neon';
 }
 
-/* ---------- 皮肤 2：Carbon Tech 碳黑电蓝（深蓝灰 + 电蓝） ---------- */
+/* ---------- 皮肤 2：Light Tech 亮白科技（白底 + 深蓝）亮色模式 ---------- */
 [data-theme='carbon'] {
-  --bg: #08090e;
-  --bg-elevated: #11141c;
-  --bg-card: #181c26;
-  --bg-hover: #202531;
-  --border: rgba(0, 168, 255, 0.24);
-  --border-strong: rgba(0, 168, 255, 0.5);
-  --text: #e8eef4;
-  --text-muted: #7a8290;
-  --text-dim: #4a5260;
-  --accent: #00a8ff;
-  --accent-2: #5b9eff;
-  --accent-grad: linear-gradient(135deg, #00a8ff 0%, #5b9eff 100%);
-  --glow: 0 0 28px rgba(0, 168, 255, 0.35);
-  --glow-2: 0 0 28px rgba(91, 158, 255, 0.35);
-  --grid-line: rgba(0, 168, 255, 0.06);
-  --hero-glow: radial-gradient(ellipse at center, rgba(0, 168, 255, 0.14) 0%, transparent 60%);
-  --theme-name: 'Carbon Tech';
+  --bg: #f0f4f8;
+  --bg-elevated: #ffffff;
+  --bg-card: #ffffff;
+  --bg-hover: #e8eef4;
+  --border: rgba(0, 102, 204, 0.2);
+  --border-strong: rgba(0, 102, 204, 0.5);
+  --text: #1a2332;
+  --text-muted: #4a5568;
+  --text-dim: #8896a8;
+  --accent: #0066cc;
+  --accent-2: #0099ff;
+  --accent-grad: linear-gradient(135deg, #0066cc 0%, #0099ff 100%);
+  --glow: 0 0 24px rgba(0, 102, 204, 0.15);
+  --glow-2: 0 0 24px rgba(0, 153, 255, 0.15);
+  --grid-line: rgba(0, 102, 204, 0.05);
+  --hero-glow: radial-gradient(ellipse at center, rgba(0, 102, 204, 0.1) 0%, transparent 60%);
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --theme-name: 'Light Tech';
 }
 
-/* ---------- 皮肤 3：Aurora Matrix 极光矩阵（深紫 + 青紫渐变） ---------- */
+/* ---------- 皮肤 3：Aurora Matrix 极光矩阵（深紫底 + 紫粉渐变） ---------- */
 [data-theme='aurora'] {
-  --bg: #0c0818;
-  --bg-elevated: #15102a;
-  --bg-card: #1d1638;
-  --bg-hover: #271d48;
-  --border: rgba(0, 212, 255, 0.24);
-  --border-strong: rgba(200, 0, 255, 0.5);
-  --text: #ece4f8;
-  --text-muted: #8a7eaa;
-  --text-dim: #4a4060;
-  --accent: #00d4ff;
-  --accent-2: #c800ff;
-  --accent-grad: linear-gradient(135deg, #00d4ff 0%, #c800ff 100%);
-  --glow: 0 0 28px rgba(0, 212, 255, 0.35);
-  --glow-2: 0 0 28px rgba(200, 0, 255, 0.35);
-  --grid-line: rgba(200, 0, 255, 0.06);
-  --hero-glow: radial-gradient(ellipse at center, rgba(200, 0, 255, 0.14) 0%, transparent 60%);
+  --bg: #15082e;
+  --bg-elevated: #1f0e44;
+  --bg-card: #2a1460;
+  --bg-hover: #351975;
+  --border: rgba(200, 100, 255, 0.35);
+  --border-strong: rgba(200, 100, 255, 0.65);
+  --text: #f0e0ff;
+  --text-muted: #9a7ac0;
+  --text-dim: #5a4080;
+  --accent: #c850ff;
+  --accent-2: #ff60c0;
+  --accent-grad: linear-gradient(135deg, #c850ff 0%, #ff60c0 100%);
+  --glow: 0 0 30px rgba(200, 80, 255, 0.4);
+  --glow-2: 0 0 30px rgba(255, 96, 192, 0.4);
+  --grid-line: rgba(200, 80, 255, 0.08);
+  --hero-glow: radial-gradient(ellipse at center, rgba(200, 80, 255, 0.18) 0%, transparent 60%);
+  --shadow-card: 0 8px 32px rgba(40, 10, 80, 0.6);
   --theme-name: 'Aurora Matrix';
 }
 
@@ -249,15 +253,20 @@ h4 {
 
 .btn-primary {
   background: var(--accent-grad);
-  color: #000;
+  color: #fff;
   border: none;
   font-weight: 600;
 }
 
 .btn-primary:hover {
-  color: #000;
+  color: #fff;
   box-shadow: var(--glow);
   transform: translateY(-1px);
+}
+
+/* 亮色皮肤按钮文字深色 */
+[data-theme='carbon'] .btn-primary {
+  color: #fff;
 }
 
 /* ---------- 网格 / 卡片 ---------- */
@@ -287,7 +296,7 @@ h4 {
 .card:hover {
   border-color: var(--border-strong);
   transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--shadow-card);
 }
 
 .card::after {
