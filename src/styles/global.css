@@ -3,64 +3,67 @@
    皮肤切换通过 <html data-theme="..."> 属性实现
    ==================================================================== */
 
-/* ---------- 皮肤 1：Cyber Neon 赛博霓虹 ---------- */
+/* ---------- 皮肤 1：Cyber Neon 赛博霓虹（深黑 + 霓虹绿） ---------- */
 :root,
 [data-theme='cyber'] {
-  --bg: #050608;
-  --bg-elevated: #0c0e14;
-  --bg-card: #0f1218;
-  --bg-hover: #14181f;
-  --border: rgba(0, 255, 157, 0.16);
-  --border-strong: rgba(0, 255, 157, 0.35);
+  --bg: #030506;
+  --bg-elevated: #0a0f0c;
+  --bg-card: #0d1410;
+  --bg-hover: #121a15;
+  --border: rgba(0, 255, 157, 0.22);
+  --border-strong: rgba(0, 255, 157, 0.45);
   --text: #e8f4ee;
   --text-muted: #7a8a82;
   --text-dim: #4a5651;
   --accent: #00ff9d;
   --accent-2: #ff0080;
   --accent-grad: linear-gradient(135deg, #00ff9d 0%, #00d4ff 100%);
-  --glow: 0 0 24px rgba(0, 255, 157, 0.28);
-  --glow-2: 0 0 24px rgba(255, 0, 128, 0.28);
-  --grid-line: rgba(0, 255, 157, 0.04);
+  --glow: 0 0 28px rgba(0, 255, 157, 0.35);
+  --glow-2: 0 0 28px rgba(255, 0, 128, 0.35);
+  --grid-line: rgba(0, 255, 157, 0.06);
+  --hero-glow: radial-gradient(ellipse at center, rgba(0, 255, 157, 0.12) 0%, transparent 60%);
   --theme-name: 'Cyber Neon';
 }
 
-/* ---------- 皮肤 2：Carbon Tech 碳黑电蓝 ---------- */
+/* ---------- 皮肤 2：Carbon Tech 碳黑电蓝（深蓝灰 + 电蓝） ---------- */
 [data-theme='carbon'] {
-  --bg: #0a0b0d;
-  --bg-elevated: #14161a;
-  --bg-card: #1a1d22;
-  --bg-hover: #21252b;
-  --border: rgba(0, 168, 255, 0.16);
-  --border-strong: rgba(0, 168, 255, 0.38);
+  --bg: #08090e;
+  --bg-elevated: #11141c;
+  --bg-card: #181c26;
+  --bg-hover: #202531;
+  --border: rgba(0, 168, 255, 0.24);
+  --border-strong: rgba(0, 168, 255, 0.5);
   --text: #e8eef4;
   --text-muted: #7a8290;
   --text-dim: #4a5260;
   --accent: #00a8ff;
   --accent-2: #5b9eff;
   --accent-grad: linear-gradient(135deg, #00a8ff 0%, #5b9eff 100%);
-  --glow: 0 0 24px rgba(0, 168, 255, 0.28);
-  --glow-2: 0 0 24px rgba(91, 158, 255, 0.28);
-  --grid-line: rgba(0, 168, 255, 0.04);
+  --glow: 0 0 28px rgba(0, 168, 255, 0.35);
+  --glow-2: 0 0 28px rgba(91, 158, 255, 0.35);
+  --grid-line: rgba(0, 168, 255, 0.06);
+  --hero-glow: radial-gradient(ellipse at center, rgba(0, 168, 255, 0.14) 0%, transparent 60%);
   --theme-name: 'Carbon Tech';
 }
 
-/* ---------- 皮肤 3：Aurora Matrix 极光矩阵 ---------- */
+/* ---------- 皮肤 3：Aurora Matrix 极光矩阵（深紫 + 青紫渐变） ---------- */
 [data-theme='aurora'] {
-  --bg: #0a0815;
-  --bg-elevated: #12101f;
-  --bg-card: #1a1530;
-  --bg-hover: #221a3d;
-  --border: rgba(0, 212, 255, 0.18);
-  --border-strong: rgba(0, 212, 255, 0.4);
+  --bg: #0c0818;
+  --bg-elevated: #15102a;
+  --bg-card: #1d1638;
+  --bg-hover: #271d48;
+  --border: rgba(0, 212, 255, 0.24);
+  --border-strong: rgba(200, 0, 255, 0.5);
   --text: #ece4f8;
   --text-muted: #8a7eaa;
   --text-dim: #4a4060;
   --accent: #00d4ff;
   --accent-2: #c800ff;
   --accent-grad: linear-gradient(135deg, #00d4ff 0%, #c800ff 100%);
-  --glow: 0 0 24px rgba(0, 212, 255, 0.28);
-  --glow-2: 0 0 24px rgba(200, 0, 255, 0.28);
-  --grid-line: rgba(0, 212, 255, 0.05);
+  --glow: 0 0 28px rgba(0, 212, 255, 0.35);
+  --glow-2: 0 0 28px rgba(200, 0, 255, 0.35);
+  --grid-line: rgba(200, 0, 255, 0.06);
+  --hero-glow: radial-gradient(ellipse at center, rgba(200, 0, 255, 0.14) 0%, transparent 60%);
   --theme-name: 'Aurora Matrix';
 }
 
@@ -93,7 +96,7 @@ body {
   background-size: 48px 48px;
 }
 
-/* 顶部渐变光晕 */
+/* 顶部渐变光晕（随皮肤变化） */
 body::before {
   content: '';
   position: fixed;
@@ -102,11 +105,11 @@ body::before {
   transform: translateX(-50%);
   width: 80vw;
   height: 60vh;
-  background: radial-gradient(ellipse at center, var(--accent) 0%, transparent 60%);
-  opacity: 0.08;
+  background: var(--hero-glow);
+  opacity: 0.6;
   pointer-events: none;
   z-index: 0;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.4s ease, background 0.4s ease;
 }
 
 a {
